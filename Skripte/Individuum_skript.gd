@@ -13,12 +13,6 @@ else:
 
 
 
-#func _erhalte_system_prompt() -> String:
-	#var ausgabe := "Dein Spitzname lautet "+spitzname+". deine Erlebnisse waren: "
-	#for jedes: String in self.lebensgeschichte: ausgabe += jedes
-	#
-	#return ausgabe
-
 var dialog: String
 func erweitere_dialog(
 	fremdwort: String,
@@ -43,15 +37,16 @@ func ansprechen(
 		Er sagt: """+aussage
 	var response := func(antwort: String) -> void:
 		ausgesprochen.call(antwort)
-		self.erweitere_dialog(prompt,Dialog.remove_think_tags(antwort))
+		self.erweitere_dialog(prompt,Gespräch.remove_think_tags(antwort))
 	self.gedanken.say(prompt+". Erzeuge nur deine Antwort.")
-	self.gedanken.response_updated.connect(spricht)
-	self.gedanken.response_finished.connect(response,CONNECT_ONE_SHOT)
+	#self.gedanken.response_updated.connect(spricht,ConnectFlags.CONNECT_ONE_SHOT)
+	self.gedanken.response_finished.connect(response,ConnectFlags.CONNECT_ONE_SHOT)
 	return func(antwort: String) -> void:
 		var nächster_prompt := """Du führst ein Gespräch mit """+ansprecher+""" der bisherige Dialog lautet
 		"""+self.dialog+""" nun hat er wie foglt reagiert """+antwort+""" führe den dialog fohrt."""
 		self.gedanken.say(nächster_prompt+". Erzeuge nur deine Antwort.")
-		self.gedanken.response_finished.connect(response,CONNECT_ONE_SHOT)
+		#self.gedanken.response_updated.connect(spricht,ConnectFlags.CONNECT_ONE_SHOT)
+		self.gedanken.response_finished.connect(response,ConnectFlags.CONNECT_ONE_SHOT)
 
 
 func _on_aufgaben_embedding_finished(embedding: PackedFloat32Array) -> void:

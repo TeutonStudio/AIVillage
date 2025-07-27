@@ -21,6 +21,7 @@ general/text_to_speech=true
 [file_customization]
 
 folder_colors={
+"res://Grauboxung/": "gray",
 "res://Skripte/": "purple",
 "res://Szenen/": "yellow"
 }
